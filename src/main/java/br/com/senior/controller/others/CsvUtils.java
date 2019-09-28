@@ -30,8 +30,6 @@ public class CsvUtils {
         .build();
 
     final ArrayList<Cidade> cidades = Lists.newArrayList(csvToBean.iterator());
-
-
   }
 
 }
