@@ -1,4 +1,4 @@
-package br.com.senior.model.others;
+package br.com.senior.model.abstracts;
 
 import java.io.Serializable;
 

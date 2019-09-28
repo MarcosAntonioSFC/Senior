@@ -1,4 +1,4 @@
-package br.com.senior.controller;
+package br.com.senior.controller.repository;
 
 import br.com.senior.controller.others.CommonRepository;
 import br.com.senior.model.Estado;

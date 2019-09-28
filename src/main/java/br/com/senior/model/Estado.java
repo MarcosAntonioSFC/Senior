@@ -1,6 +1,6 @@
 package br.com.senior.model;
 
-import br.com.senior.model.others.AbstractModel;
+import br.com.senior.model.abstracts.AbstractModel;
 import br.com.senior.model.others.LengthConstants;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
