@@ -10,7 +10,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 		"br.com.senior.controller"
 })
 @ComponentScan({
-		"br.com.senior.controller"
+    "br.com.senior.controller",
+    "br.com.senior.endpoint"
 })
 @EntityScan({
 		"br.com.senior.model"

@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes = JpaTest.class,
     properties = {
         "debug=true",
+        "flyway.enable=false",
         "spring.jpa.show-sql=true",
         "spring.jpa.hibernate.ddl-auto=create"
     }, webEnvironment = SpringBootTest.WebEnvironment.NONE)

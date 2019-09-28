@@ -1,9 +1,14 @@
 package br.com.senior.endpoint.cidade;
 
+import br.com.senior.controller.abstracts.ServiceException;
+import br.com.senior.controller.services.CidadeService;
 import br.com.senior.endpoint.abstracts.AbstractResponseWrapper;
 import br.com.senior.endpoint.abstracts.MessageResponseWrapper;
 
-import org.springframework.http.MediaType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +19,22 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/cidade/")
 public class CidadeEndpoint {
 
+  private static final Logger logger = LoggerFactory.getLogger(CidadeEndpoint.class);
+
+  /**
+   * Instancia do serviço.
+   */
+  private final CidadeService service;
+
+  /**
+   * Construtor do endpoint.
+   *
+   * @param service CDI.
+   */
+  @Autowired
+  public CidadeEndpoint(CidadeService service) {
+    this.service = service;
+  }
 
   /**
    * Método para ser utilizado na leitura e criação dos dados.
@@ -22,10 +43,20 @@ public class CidadeEndpoint {
    * @see AbstractResponseWrapper
    */
   @PostMapping(
-      path = "/many/",
-      consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}
+      path = "/upload/"
   )
-  public MessageResponseWrapper readCsv(@RequestParam MultipartFile file) {
+  public MessageResponseWrapper readCsv(@RequestParam("file") MultipartFile file) {
+    logger.info("Recebendo aquivo");
+    try {
+      service.upload(file);
+      return new MessageResponseWrapper("Recebido", 200);
+    } catch (ServiceException e) {
+      return new MessageResponseWrapper(e.getMessage(), 409);
+    }
+  }
+
+  @GetMapping("/")
+  public MessageResponseWrapper teste() {
     return new MessageResponseWrapper("Recebido", 200);
   }
 

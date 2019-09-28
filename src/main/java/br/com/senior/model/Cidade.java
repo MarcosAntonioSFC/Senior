@@ -3,6 +3,10 @@ package br.com.senior.model;
 import br.com.senior.model.abstracts.AbstractModel;
 import br.com.senior.model.others.LengthConstants;
 import br.com.senior.model.others.TypeColumnEntity;
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
+import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvCustomBindByName;
 
 import java.math.BigDecimal;
 
@@ -36,6 +40,7 @@ public class Cidade extends AbstractModel {
    */
   @Id
   @Column(name = ID_COLNAME)
+  @CsvBindByName(column = "ibge_id")
   private String id;
 
   /**
@@ -44,6 +49,7 @@ public class Cidade extends AbstractModel {
   @NotNull
   @ManyToOne(targetEntity = Estado.class, fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = Estado.ID_COLNAME)
+  @CsvCustomBindByName(converter = EstadoConverterCsv.class, column = "uf")
   private Estado estado;
 
   /**
@@ -51,48 +57,61 @@ public class Cidade extends AbstractModel {
    */
   @NotNull
   @Column(name = NOME_COLNAME, length = LengthConstants.CIDADE_NOME, nullable = false)
+  @CsvBindByName(column = "name")
   private String nome;
 
   /**
    * Indica se o registro é capital.
    */
   @Column(name = CAPITAL_COLNAME)
+  @CsvBindByName(column = "capital")
   private Boolean capital;
 
   /**
    * Latitude da cidade
    */
-  @Column(name = LATITUDE_COLNAME, columnDefinition = TypeColumnEntity.DOUBLE_DECIMAL_TYPE)
+  @NotNull
+  @Column(name = LATITUDE_COLNAME, columnDefinition = TypeColumnEntity.DOUBLE_DECIMAL_TYPE, nullable = false)
+  @CsvBindByName(column = "lat")
   private BigDecimal latitude;
 
   /**
    * Longitute da cidade
    */
-  @Column(name = LONGITUDE_COLNAME, columnDefinition = TypeColumnEntity.DOUBLE_DECIMAL_TYPE)
+  @NotNull
+  @Column(name = LONGITUDE_COLNAME, columnDefinition = TypeColumnEntity.DOUBLE_DECIMAL_TYPE, nullable = false)
+  @CsvBindByName(column = "lon")
   private BigDecimal longitude;
 
   /**
    * Sem acentos
    */
+  @NotNull
   @Column(name = NO_ACCENTS_COLNAME, length = LengthConstants.CIDADE_NOME_NOACCENTS, nullable = false)
+  @CsvBindByName(column = "no_accents")
   private String noAccents;
 
   /**
    * Armazena o nome alternativo.
    */
-  @Column(name = NOME_ALTERNATIVO_COLNAME, length = LengthConstants.CIDADE_NOME, nullable = false)
+  @Column(name = NOME_ALTERNATIVO_COLNAME, length = LengthConstants.CIDADE_NOME)
+  @CsvBindByName(column = "alternative_names")
   private String nomeAlternativo;
 
   /**
    * Micro região
    */
+  @NotNull
   @Column(name = MICRO_REGIAO_COLNAME, length = LengthConstants.MICRO_REGIAO, nullable = false)
+  @CsvBindByName(column = "microregion")
   private String microRegiao;
 
   /**
    * Meso região
    */
+  @NotNull
   @Column(name = MESO_REGIAO_COLNAME, length = LengthConstants.MESO_REGIAO, nullable = false)
+  @CsvBindByName(column = "mesoregion")
   private String mesoRegiao;
 
   public Cidade() {
@@ -177,5 +196,29 @@ public class Cidade extends AbstractModel {
 
   public void setMesoRegiao(final String mesoRegiao) {
     this.mesoRegiao = mesoRegiao;
+  }
+
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Cidade)) {
+      return false;
+    }
+    final Cidade cidade = (Cidade) o;
+    return Objects.equal(id, cidade.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(id);
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this)
+        .add("id", id)
+        .toString();
   }
 }
