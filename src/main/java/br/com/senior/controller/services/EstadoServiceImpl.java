@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * Serviço responsável pelas regras de negócio da cidade.
  */
 @Service
-public class EstadoServiceImpl extends AbstractService<Estado> implements EstadoService {
+public class EstadoServiceImpl extends AbstractService<Estado, EstadoRepository> implements EstadoService {
 
   /**
    * Construtor da classe.

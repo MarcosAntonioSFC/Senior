@@ -47,7 +47,7 @@ public class Cidade extends AbstractModel {
    * Relação com o estado.
    */
   @NotNull
-  @ManyToOne(targetEntity = Estado.class, fetch = FetchType.LAZY, optional = false)
+  @ManyToOne(targetEntity = Estado.class, fetch = FetchType.EAGER, optional = false)
   @JoinColumn(name = Estado.ID_COLNAME)
   @CsvCustomBindByName(converter = EstadoConverterCsv.class, column = "uf")
   private Estado estado;

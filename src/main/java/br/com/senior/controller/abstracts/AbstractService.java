@@ -21,19 +21,19 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @param <T> objeto generics indicando o model.
  */
-public abstract class AbstractService<T extends AbstractModel> implements Service<T> {
+public abstract class AbstractService<T extends AbstractModel, R extends CommonRepository<T>> implements Service<T> {
 
   /**
    * Instancia do repository que deverá ser passada pela subclasse.
    */
-  protected CommonRepository<T> repository;
+  protected R repository;
 
   /**
    * Construtor
    *
    * @param repository repositório injetado na subclasse.
    */
-  public AbstractService(CommonRepository<T> repository) {
+  public AbstractService(R repository) {
     this.repository = repository;
   }
 
@@ -84,7 +84,7 @@ public abstract class AbstractService<T extends AbstractModel> implements Servic
    *
    * @return repository.
    */
-  public CommonRepository<T> getRepository() {
+  public R getRepository() {
     return repository;
   }
 }

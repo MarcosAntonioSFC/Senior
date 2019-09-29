@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
  * Serviço responsável pelas regras de negócio da cidade.
  */
 @Service
-public class CidadeServiceImpl extends AbstractService<Cidade> implements CidadeService {
+public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository> implements CidadeService {
 
   private static final String ERRO_NA_LEITURO_ARQUIVO = "Houve problemas na leitura do arquivo";
   private final EstadoService estadoService;
@@ -42,16 +42,28 @@ public class CidadeServiceImpl extends AbstractService<Cidade> implements Cidade
    * Método para fazer o upload do arquivo.
    *
    * @param file arquivo de upload.
+   * @return cidades inseridas
    */
   @Override
-  public void upload(final MultipartFile file) throws ServiceException {
+  public List<Cidade> upload(final MultipartFile file) throws ServiceException {
     try {
       final ArrayList<Cidade> cidades = CsvUtils.read(file.getInputStream());
       final List<Estado> ufs = cidades.stream().map(Cidade::getEstado).distinct().collect(Collectors.toList());
       estadoService.save(ufs);
-      save(cidades);
+      return save(cidades);
     } catch (IOException e) {
       throw new ServiceException(ERRO_NA_LEITURO_ARQUIVO);
     }
+  }
+
+  /**
+   * Retorna as cidades capitais ordenadas pelo nome.
+   *
+   * @return capitais
+   */
+  @Override
+  public List<Cidade> getCapitais() {
+    final List<Cidade> cidades = getRepository().findCidadeByCapitalOrderByNome(true);
+    return cidades;
   }
 }

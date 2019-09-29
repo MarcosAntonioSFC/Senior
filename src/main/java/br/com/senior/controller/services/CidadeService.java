@@ -4,6 +4,8 @@ import br.com.senior.controller.abstracts.Service;
 import br.com.senior.controller.abstracts.ServiceException;
 import br.com.senior.model.Cidade;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -11,10 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface CidadeService extends Service<Cidade> {
 
-  /**
-   * Método para fazer o upload do arquivo.
-   *
-   * @param file arquivo de upload.
-   */
-  void upload(final MultipartFile file) throws ServiceException;
+  List<Cidade> upload(final MultipartFile file) throws ServiceException;
+
+  List<Cidade> getCapitais();
 }

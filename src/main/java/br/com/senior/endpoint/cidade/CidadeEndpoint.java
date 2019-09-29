@@ -3,11 +3,16 @@ package br.com.senior.endpoint.cidade;
 import br.com.senior.controller.abstracts.ServiceException;
 import br.com.senior.controller.services.CidadeService;
 import br.com.senior.endpoint.abstracts.AbstractResponseWrapper;
-import br.com.senior.endpoint.abstracts.MessageResponseWrapper;
+import br.com.senior.endpoint.cidade.responses.CidadesResponseWrapper;
+import br.com.senior.model.Cidade;
+
+import java.text.MessageFormat;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,21 +53,31 @@ public class CidadeEndpoint {
   @PostMapping(
       path = "/upload/"
   )
-  public MessageResponseWrapper readCsv(@RequestParam("file") MultipartFile file) {
+  public CidadesResponseWrapper readCsv(@RequestParam("file") MultipartFile file) {
     try {
       logger.info("Recebendo aquivo");
-      service.upload(file);
-      return new MessageResponseWrapper("Recebido", 200);
+      final List<Cidade> cidades = service.upload(file);
+      return new CidadesResponseWrapper(MessageFormat.format("Importado {0} cidades com Sucesso!", cidades.size()), 200);
     } catch (ServiceException e) {
-      return new MessageResponseWrapper(e.getMessage(), 409);
+      return new CidadesResponseWrapper(e.getMessage(), 409);
     }
   }
 
+  /**
+   * #1 - Retorna apenas as cidades que são capitais ordenando pelo nome.
+   *
+   * @return cidades capitais.
+   */
   @GetMapping(
-      path = "/aff/"
+      path = "/capitais/",
+      produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
   )
-  public MessageResponseWrapper aff() {
-    return new MessageResponseWrapper("Recebido", 200);
+  public CidadesResponseWrapper capitais() {
+    try {
+      logger.info("Consultando capitais");
+      return new CidadesResponseWrapper(service.getCapitais(), 200);
+    } catch (Throwable e) {
+      return new CidadesResponseWrapper(e.getMessage(), 409);
+    }
   }
-
 }

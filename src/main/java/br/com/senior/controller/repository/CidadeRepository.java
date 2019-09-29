@@ -3,6 +3,8 @@ package br.com.senior.controller.repository;
 import br.com.senior.controller.others.CommonRepository;
 import br.com.senior.model.Cidade;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,4 +12,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface CidadeRepository extends CommonRepository<Cidade> {
+
+  List<Cidade> findCidadeByCapitalOrderByNome(final Boolean capital);
+
 }

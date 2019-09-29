@@ -5,14 +5,19 @@ import java.io.Serializable;
 /**
  * Abstração para retor dos endpoints
  *
- * @param <T> T que seja serializavel.
+ * @param <T>
  */
-public abstract class AbstractResponseWrapper<T extends Serializable> implements Serializable {
+public abstract class AbstractResponseWrapper<T> implements Serializable {
 
   /**
    * Dado própriamente dito.
    */
   private T data;
+
+  /**
+   *
+   */
+  private String message;
 
   /**
    * Http code
@@ -24,6 +29,16 @@ public abstract class AbstractResponseWrapper<T extends Serializable> implements
   public AbstractResponseWrapper(T data, final int status) {
     this.data = data;
     this.status = status;
+  }
+
+  public AbstractResponseWrapper(final String message, final int status) {
+    this.message = message;
+    this.status = status;
+  }
+
+  public AbstractResponseWrapper(final T data, final int status, final String message) {
+    this(data, status);
+    this.message = message;
   }
 
   public T getData() {
@@ -40,5 +55,13 @@ public abstract class AbstractResponseWrapper<T extends Serializable> implements
 
   public void setStatus(final int status) {
     this.status = status;
+  }
+
+  public String getMessage() {
+    return message;
+  }
+
+  public void setMessage(final String message) {
+    this.message = message;
   }
 }
