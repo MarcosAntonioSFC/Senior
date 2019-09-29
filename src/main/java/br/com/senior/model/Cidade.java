@@ -143,7 +143,7 @@ public class Cidade extends AbstractModel {
   }
 
   public Boolean getCapital() {
-    return capital;
+    return null == capital ? false : capital;
   }
 
   public void setCapital(final Boolean capital) {

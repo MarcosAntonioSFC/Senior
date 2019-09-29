@@ -2,13 +2,15 @@ package br.com.senior.controller.services;
 
 import br.com.senior.controller.abstracts.AbstractService;
 import br.com.senior.controller.abstracts.ServiceException;
+import br.com.senior.controller.others.CsvUtils;
 import br.com.senior.controller.repository.CidadeRepository;
 import br.com.senior.model.Cidade;
+import br.com.senior.model.Estado;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,15 +23,19 @@ import org.springframework.web.multipart.MultipartFile;
 public class CidadeServiceImpl extends AbstractService<Cidade> implements CidadeService {
 
   private static final String ERRO_NA_LEITURO_ARQUIVO = "Houve problemas na leitura do arquivo";
+  private final EstadoService estadoService;
 
   /**
    * Construtor da classe.
    *
    * @param repository CDI.
+   * @param estadoService CDI do serviço estado.
+   * @see EstadoService
    */
   @Autowired
-  public CidadeServiceImpl(final CidadeRepository repository) {
+  public CidadeServiceImpl(final CidadeRepository repository, final EstadoService estadoService) {
     super(repository);
+    this.estadoService = estadoService;
   }
 
   /**
@@ -40,14 +46,12 @@ public class CidadeServiceImpl extends AbstractService<Cidade> implements Cidade
   @Override
   public void upload(final MultipartFile file) throws ServiceException {
     try {
-      byte[] bytes = file.getBytes();
-      Path path = Paths.get(/*UPLOADED_FOLDER + */file.getOriginalFilename());
-      Files.write(path, bytes);
-
+      final ArrayList<Cidade> cidades = CsvUtils.read(file.getInputStream());
+      final List<Estado> ufs = cidades.stream().map(Cidade::getEstado).distinct().collect(Collectors.toList());
+      estadoService.save(ufs);
+      save(cidades);
     } catch (IOException e) {
       throw new ServiceException(ERRO_NA_LEITURO_ARQUIVO);
     }
-
-
   }
 }
