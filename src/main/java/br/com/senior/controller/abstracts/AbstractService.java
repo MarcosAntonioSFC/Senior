@@ -12,6 +12,7 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
 
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,7 +44,7 @@ public abstract class AbstractService<T extends AbstractModel> implements Servic
    * @return objeto persistido.
    */
   @Override
-  @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+  @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_UNCOMMITTED)
   public T save(final T toSave) {
     validationEntity(toSave);
     return getRepository().save(toSave);
@@ -56,11 +57,11 @@ public abstract class AbstractService<T extends AbstractModel> implements Servic
    * @return objeto persistido.
    */
   @Override
-  @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+  @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_UNCOMMITTED)
   public List<T> save(final List<T> toSave) {
     final List<T> saves = new ArrayList<>();
     for (final T entity : toSave) {
-      saves.add(save(entity));
+      saves.add(getRepository().save(entity));
     }
     return saves;
   }
