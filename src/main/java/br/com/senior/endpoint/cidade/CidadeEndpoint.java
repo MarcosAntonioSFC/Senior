@@ -4,6 +4,7 @@ import br.com.senior.controller.abstracts.ServiceException;
 import br.com.senior.controller.services.CidadeService;
 import br.com.senior.endpoint.abstracts.AbstractResponseWrapper;
 import br.com.senior.endpoint.cidade.responses.CidadesResponseWrapper;
+import br.com.senior.endpoint.cidade.responses.EstadoCidadesResponseWrapper;
 import br.com.senior.model.Cidade;
 
 import java.text.MessageFormat;
@@ -80,4 +81,24 @@ public class CidadeEndpoint {
       return new CidadesResponseWrapper(e.getMessage(), 409);
     }
   }
+
+  /**
+   * #2 - Estado, quantidade de cidades.
+   *
+   * @return Estados com maior e menos quantidade.
+   */
+  @GetMapping(
+      path = "/estados/cidades/",
+      produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
+  )
+  public EstadoCidadesResponseWrapper estadoCidades() {
+    try {
+      logger.info("Consultando capitais");
+      return new EstadoCidadesResponseWrapper(service.getEstadoCidades(), 200);
+    } catch (Throwable e) {
+      return new EstadoCidadesResponseWrapper(e.getMessage(), 409);
+    }
+  }
+
+
 }

@@ -3,6 +3,7 @@ package br.com.senior.controller.services;
 import br.com.senior.controller.abstracts.Service;
 import br.com.senior.controller.abstracts.ServiceException;
 import br.com.senior.model.Cidade;
+import br.com.senior.model.others.EstadoCidade;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface CidadeService extends Service<Cidade> {
   List<Cidade> upload(final MultipartFile file) throws ServiceException;
 
   List<Cidade> getCapitais();
+
+  List<EstadoCidade> getEstadoCidades();
 }

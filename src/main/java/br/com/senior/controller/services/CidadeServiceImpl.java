@@ -6,6 +6,7 @@ import br.com.senior.controller.others.CsvUtils;
 import br.com.senior.controller.repository.CidadeRepository;
 import br.com.senior.model.Cidade;
 import br.com.senior.model.Estado;
+import br.com.senior.model.others.EstadoCidade;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository>
   /**
    * Construtor da classe.
    *
-   * @param repository CDI.
+   * @param repository    CDI.
    * @param estadoService CDI do serviço estado.
    * @see EstadoService
    */
@@ -63,7 +64,16 @@ public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository>
    */
   @Override
   public List<Cidade> getCapitais() {
-    final List<Cidade> cidades = getRepository().findCidadeByCapitalOrderByNome(true);
-    return cidades;
+    return getRepository().findCidadeByCapitalOrderByNome(true);
+  }
+
+  /**
+   * Método para fazer a consulta da questão dois.
+   *
+   * @return estdado maior e menor de acordo com a quantidade de cidade.
+   */
+  @Override
+  public List<EstadoCidade> getEstadoCidades() {
+    return getRepository().findEstadoCidades();
   }
 }
