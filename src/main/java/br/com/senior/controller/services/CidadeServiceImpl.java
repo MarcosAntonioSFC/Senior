@@ -10,6 +10,8 @@ import br.com.senior.model.others.EstadoCidade;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,6 +76,10 @@ public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository>
    */
   @Override
   public List<EstadoCidade> getEstadoCidades() {
-    return getRepository().findEstadoCidades();
+    final List<EstadoCidade> estadoCidades = getRepository().findEstadoCidades();
+    return Arrays.asList(
+        estadoCidades.stream().min(Comparator.comparing(EstadoCidade::getQuantidade)).get(),
+        estadoCidades.stream().max(Comparator.comparing(EstadoCidade::getQuantidade)).get()
+    );
   }
 }
