@@ -1,6 +1,6 @@
 package br.com.senior.endpoint.cidade.responses;
 
-import br.com.senior.endpoint.abstracts.AbstractResponseWrapper;
+import br.com.senior.endpoint.abstracts.ResponseWrapper;
 import br.com.senior.model.Cidade;
 
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Response padrão para o model cidade.
  */
-public class CidadesResponseWrapper extends AbstractResponseWrapper<List<Cidade>> {
+public class CidadesResponseWrapper extends ResponseWrapper<List<Cidade>> {
 
   /**
    * Construtor padrão.

@@ -14,4 +14,6 @@ public interface Service<T extends AbstractModel> {
   T save(T toSave);
 
   List<T> save(List<T> toSave);
+
+  T getById(String id) throws NotFoundServiceException;
 }

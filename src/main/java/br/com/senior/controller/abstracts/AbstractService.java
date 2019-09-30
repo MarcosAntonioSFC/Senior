@@ -2,9 +2,11 @@ package br.com.senior.controller.abstracts;
 
 import br.com.senior.controller.others.CommonRepository;
 import br.com.senior.model.abstracts.AbstractModel;
+import com.google.common.base.Strings;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -12,6 +14,7 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
 
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public abstract class AbstractService<T extends AbstractModel, R extends CommonRepository<T>> implements Service<T> {
 
+  private static final String IDENTIFICADOR_NOT_FOUND = "Identificador não informado";
   /**
    * Instancia do repository que deverá ser passada pela subclasse.
    */
@@ -64,6 +68,26 @@ public abstract class AbstractService<T extends AbstractModel, R extends CommonR
       saves.add(getRepository().save(entity));
     }
     return saves;
+  }
+
+  /**
+   * Método abstrato para a busca de dados baseando-se no identificador.
+   *
+   * @param id identificador do registro.
+   * @return objeto encontrado.
+   * @throws NotFoundServiceException exceção caso não encontre o respectivo registro.
+   */
+  @Override
+  public T getById(final String id) throws NotFoundServiceException {
+    if (Strings.isNullOrEmpty(id)) {
+      throw new ServiceException(IDENTIFICADOR_NOT_FOUND);
+    }
+    final Optional<T> byId = getRepository().findById(id);
+    if (!byId.isPresent()) {
+      throw new NotFoundServiceException();
+    }
+
+    return byId.get();
   }
 
   /**

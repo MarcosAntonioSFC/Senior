@@ -18,5 +18,7 @@ public interface CidadeService extends Service<Cidade> {
 
   List<Cidade> getCapitais();
 
-  List<EstadoCidade> getEstadoCidades();
+  List<EstadoCidade> getEstadoCidadeMenorMaior();
+
+  List<EstadoCidade> getCidadeEstados();
 }

@@ -75,11 +75,21 @@ public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository>
    * @return estdado maior e menor de acordo com a quantidade de cidade.
    */
   @Override
-  public List<EstadoCidade> getEstadoCidades() {
-    final List<EstadoCidade> estadoCidades = getRepository().findEstadoCidades();
+  public List<EstadoCidade> getEstadoCidadeMenorMaior() {
+    final List<EstadoCidade> estadoCidades = getCidadeEstados();
     return Arrays.asList(
         estadoCidades.stream().min(Comparator.comparing(EstadoCidade::getQuantidade)).get(),
         estadoCidades.stream().max(Comparator.comparing(EstadoCidade::getQuantidade)).get()
     );
+  }
+
+  /**
+   * Método para a consulta de estado com suas respectivas quantidades de municipios.
+   *
+   * @return Lista dos estados com suas respectivas quantidades de municipios.
+   */
+  @Override
+  public List<EstadoCidade> getCidadeEstados() {
+    return getRepository().findEstadoCidades();
   }
 }

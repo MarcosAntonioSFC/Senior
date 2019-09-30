@@ -7,7 +7,7 @@ import java.io.Serializable;
  *
  * @param <T>
  */
-public abstract class AbstractResponseWrapper<T> implements Serializable {
+public class ResponseWrapper<T> implements Serializable {
 
   /**
    * Dado própriamente dito.
@@ -26,17 +26,17 @@ public abstract class AbstractResponseWrapper<T> implements Serializable {
    */
   private int status;
 
-  public AbstractResponseWrapper(T data, final int status) {
+  public ResponseWrapper(T data, final int status) {
     this.data = data;
     this.status = status;
   }
 
-  public AbstractResponseWrapper(final String message, final int status) {
+  public ResponseWrapper(final String message, final int status) {
     this.message = message;
     this.status = status;
   }
 
-  public AbstractResponseWrapper(final T data, final int status, final String message) {
+  public ResponseWrapper(final T data, final int status, final String message) {
     this(data, status);
     this.message = message;
   }

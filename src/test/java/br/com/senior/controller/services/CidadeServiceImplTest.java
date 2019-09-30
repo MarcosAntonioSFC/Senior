@@ -1,10 +1,12 @@
 package br.com.senior.controller.services;
 
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 
 import br.com.senior.controller.abstracts.ServiceException;
 import br.com.senior.controller.repository.CidadeRepository;
 import br.com.senior.model.Estado;
+import br.com.senior.model.others.EstadoCidade;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,5 +52,23 @@ public class CidadeServiceImplTest {
 
     Mockito.verify(estadoService, Mockito.times(1)).save(Mockito.anyList());
     Mockito.verify(service, Mockito.times(1)).save(Mockito.anyList());
+  }
+
+  @Test
+  public void getEstadoCidadeMenorMaior() {
+    CidadeServiceImpl service = new CidadeServiceImpl(null, null);
+    service = spy(service);
+
+    final List<EstadoCidade> all = doReturn(
+        Arrays.asList(
+            new EstadoCidade("MEIO", 2),
+            new EstadoCidade("MAIOR", 3),
+            new EstadoCidade("MENOR", 1)
+        )
+    ).when(service).getCidadeEstados();
+
+    final List<EstadoCidade> result = service.getEstadoCidadeMenorMaior();
+    Assert.assertTrue("Menor não está presente", result.stream().anyMatch(x -> x.getQuantidade() == 1));
+    Assert.assertTrue("Maior não está presente", result.stream().anyMatch(x -> x.getQuantidade() == 3));
   }
 }

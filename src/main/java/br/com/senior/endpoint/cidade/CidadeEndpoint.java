@@ -2,7 +2,7 @@ package br.com.senior.endpoint.cidade;
 
 import br.com.senior.controller.abstracts.ServiceException;
 import br.com.senior.controller.services.CidadeService;
-import br.com.senior.endpoint.abstracts.AbstractResponseWrapper;
+import br.com.senior.endpoint.abstracts.ResponseWrapper;
 import br.com.senior.endpoint.cidade.responses.CidadesResponseWrapper;
 import br.com.senior.endpoint.cidade.responses.EstadoCidadesResponseWrapper;
 import br.com.senior.model.Cidade;
@@ -26,14 +26,9 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping("/cidade/")
-public class CidadeEndpoint {
+public class CidadeEndpoint extends AbstractEndpoint<Cidade, CidadeService> {
 
   private static final Logger logger = LoggerFactory.getLogger(CidadeEndpoint.class);
-
-  /**
-   * Instancia do serviço.
-   */
-  private final CidadeService service;
 
   /**
    * Construtor do endpoint.
@@ -42,14 +37,14 @@ public class CidadeEndpoint {
    */
   @Autowired
   public CidadeEndpoint(CidadeService service) {
-    this.service = service;
+    super(service);
   }
 
   /**
-   * Método para ser utilizado na leitura e criação dos dados.
+   * #1 - Método para ser utilizado na leitura e criação dos dados.
    *
    * @return mensagem de sucesso ou não.
-   * @see AbstractResponseWrapper
+   * @see ResponseWrapper
    */
   @PostMapping(
       path = "/upload/"
@@ -57,7 +52,7 @@ public class CidadeEndpoint {
   public CidadesResponseWrapper readCsv(@RequestParam("file") MultipartFile file) {
     try {
       logger.info("Recebendo aquivo");
-      final List<Cidade> cidades = service.upload(file);
+      final List<Cidade> cidades = getService().upload(file);
       return new CidadesResponseWrapper(MessageFormat.format("Importado {0} cidades com Sucesso!", cidades.size()), 200);
     } catch (ServiceException e) {
       return new CidadesResponseWrapper(e.getMessage(), 409);
@@ -65,7 +60,7 @@ public class CidadeEndpoint {
   }
 
   /**
-   * #1 - Retorna apenas as cidades que são capitais ordenando pelo nome.
+   * #2 - Retorna apenas as cidades que são capitais ordenando pelo nome.
    *
    * @return cidades capitais.
    */
@@ -76,25 +71,43 @@ public class CidadeEndpoint {
   public CidadesResponseWrapper capitais() {
     try {
       logger.info("Consultando capitais");
-      return new CidadesResponseWrapper(service.getCapitais(), 200);
+      return new CidadesResponseWrapper(getService().getCapitais(), 200);
     } catch (Throwable e) {
       return new CidadesResponseWrapper(e.getMessage(), 409);
     }
   }
 
   /**
-   * #2 - Estado, quantidade de cidades.
+   * #3 - Estado maior e menor considerando a quantidade de cidades.
    *
    * @return Estados com maior e menos quantidade.
    */
   @GetMapping(
-      path = "/estados/cidades/",
+      path = "/tamanho/estados/cidades/",
       produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
   )
-  public EstadoCidadesResponseWrapper estadoCidades() {
+  public EstadoCidadesResponseWrapper estadoCidadeMenorMaior() {
     try {
-      logger.info("Consultando capitais");
-      return new EstadoCidadesResponseWrapper(service.getEstadoCidades(), 200);
+      logger.info("Consultando maior e menor estado");
+      return new EstadoCidadesResponseWrapper(getService().getEstadoCidadeMenorMaior(), 200);
+    } catch (Throwable e) {
+      return new EstadoCidadesResponseWrapper(e.getMessage(), 409);
+    }
+  }
+
+  /**
+   * #4 - Estado, quantidade de cidades.
+   *
+   * @return Todos os estado com as respectivas quantidades de municipios.
+   */
+  @GetMapping(
+      path = "/cidades/estados/",
+      produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
+  )
+  public EstadoCidadesResponseWrapper cidadeEstados() {
+    try {
+      logger.info("Consultando Estado e Cidades");
+      return new EstadoCidadesResponseWrapper(getService().getCidadeEstados(), 200);
     } catch (Throwable e) {
       return new EstadoCidadesResponseWrapper(e.getMessage(), 409);
     }
