@@ -186,4 +186,22 @@ public class CidadeEndpoint extends AbstractEndpoint<Cidade, CidadeService> {
     }
   }
 
+
+  /**
+   * #12 - Cidades mais distantes
+   *
+   * @return As duas cidades mais distantes dos registros.
+   */
+  @GetMapping(
+      path = "/mais/distantes/",
+      produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
+  )
+  public CidadesResponseWrapper maisDistantes() {
+    try {
+      return new CidadesResponseWrapper(getService().maisDistantes(), HttpStatus.OK.value());
+    } catch (Throwable e) {
+      return new CidadesResponseWrapper(e.getMessage(), HttpStatus.CONFLICT.value());
+    }
+  }
+
 }

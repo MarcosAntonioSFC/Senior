@@ -12,6 +12,7 @@ import br.com.senior.model.others.EstadoCidade;
 import com.google.common.base.Strings;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -31,6 +32,8 @@ public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository>
   private static final String ERRO_NA_LEITURO_ARQUIVO = "Houve problemas na leitura do arquivo";
   private static final String ESTADO_NOT_FOUND = "Estado não informado";
   private static final String CAPITAL_JA_EXISTE = "Já existe uma capital para este estado";
+  private static final double RAIO_TERRA = 6371.0;
+  private static final BigDecimal DOIS = new BigDecimal("2");
   private final EstadoService estadoService;
 
   private final CustomCidadeRepository customCidadeRepository;
@@ -38,9 +41,9 @@ public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository>
   /**
    * Construtor da classe.
    *
-   * @param repository    CDI.
+   * @param repository             CDI.
    * @param customCidadeRepository CDI.
-   * @param estadoService CDI do serviço estado.
+   * @param estadoService          CDI do serviço estado.
    * @see EstadoService
    */
   @Autowired
@@ -183,4 +186,57 @@ public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository>
   public long countAll() {
     return getRepository().count();
   }
+
+  /**
+   * Calcula a cidades mais distantes.
+   *
+   * @return
+   */
+  @Override
+  public List<Cidade> maisDistantes() {
+    final List<Cidade> all = getRepository().findAll();
+    calcularDistancia(new Cidade(), new Cidade());
+
+    return null;
+  }
+
+  /**
+   * Método que cálcula a distancia entre as duas cidades.
+   *
+   * @param cidade  cidade um.
+   * @param cidade2 cidade dois.
+   * @return distancia entre as cidades.
+   */
+  protected double calcularDistancia(final Cidade cidade, final Cidade cidade2) {
+    //a + b + 90 = 180º -> teoria dos triangulos (soma interna dos angulos)
+    //a = 90 - b
+    //b = 90 - a
+    //tan a = DLA / DLO
+    //sen a = DLA / distancia
+    //cos a = DLO / distancia
+    final double long1 = cidade.getLongitude().doubleValue();
+    final double lat1 = cidade.getLatitude().doubleValue();
+    final double long2 = cidade2.getLongitude().doubleValue();
+    final double lat2 = cidade2.getLatitude().doubleValue();
+
+    //Diferença longitude
+    final double dlo = long2 - long1;
+    //Diferença latitude
+    final double dla = lat2 - lat1;
+
+    final double sinDla = Math.pow(Math.sin(rad(dla / 2)), 2);
+    final double sinDlo = Math.pow(Math.sin(rad(dlo / 2)), 2);
+
+    final double cosLat1 = Math.cos(rad(lat1));
+    final double cosLat2 = Math.cos(rad(lat2));
+
+    final double dist = (sinDla + sinDlo) * (cosLat1 + cosLat2);
+
+    return RAIO_TERRA * (2 * Math.atan2(Math.sqrt(dist), Math.sqrt(1 - dist)));
+  }
+
+  private double rad(final double dlHalf) {
+    return (dlHalf * Math.PI / 180.0);
+  }
+
 }

@@ -5,11 +5,14 @@ import static org.mockito.Mockito.spy;
 
 import br.com.senior.controller.abstracts.ServiceException;
 import br.com.senior.controller.repository.CidadeRepository;
+import br.com.senior.model.Cidade;
 import br.com.senior.model.Estado;
 import br.com.senior.model.others.EstadoCidade;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,5 +73,30 @@ public class CidadeServiceImplTest {
     final List<EstadoCidade> result = service.getEstadoCidadeMenorMaior();
     Assert.assertTrue("Menor não está presente", result.stream().anyMatch(x -> x.getQuantidade() == 1));
     Assert.assertTrue("Maior não está presente", result.stream().anyMatch(x -> x.getQuantidade() == 3));
+  }
+
+  @Test
+  public void calcularDistancia() {
+    CidadeServiceImpl service = new CidadeServiceImpl(null, null, null);
+    final Cidade serrana = new Cidade();
+    serrana.setLongitude(new BigDecimal("-47.5977620963"));
+    serrana.setLatitude(new BigDecimal("-21.209477985"));
+
+    final Cidade serraAzul = new Cidade();
+    serraAzul.setLongitude(new BigDecimal("-47.5632499203"));
+    serraAzul.setLatitude(new BigDecimal("-21.3102876657"));
+
+    final Cidade sertaozinho = new Cidade();
+    sertaozinho.setLongitude(new BigDecimal("-47.991148431"));
+    sertaozinho.setLatitude(new BigDecimal("-21.137021505"));
+
+    final Cidade saoPaulo = new Cidade();
+    saoPaulo.setLongitude(new BigDecimal("-46.5703831821"));
+    saoPaulo.setLatitude(new BigDecimal("-23.5673865"));
+
+    System.out.println(MessageFormat.format("Serrana -> Sertãozinho = {0}", service.calcularDistancia(serrana, sertaozinho)));
+    System.out.println(MessageFormat.format("Serrana -> Serra Azul = {0}", service.calcularDistancia(serrana, serraAzul)));
+    System.out.println(MessageFormat.format("Serrana -> São Paulo = {0}", service.calcularDistancia(serrana, saoPaulo)));
+    System.out.println(MessageFormat.format("Sertãozinho -> São Paulo = {0}", service.calcularDistancia(sertaozinho, saoPaulo)));
   }
 }

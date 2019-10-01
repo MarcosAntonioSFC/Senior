@@ -29,4 +29,6 @@ public interface CidadeService extends Service<Cidade> {
   Long countByColumn(final String column) throws ServiceException;
 
   long countAll();
+
+  List<Cidade> maisDistantes();
 }
