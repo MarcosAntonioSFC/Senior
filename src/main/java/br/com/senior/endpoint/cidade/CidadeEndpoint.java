@@ -169,4 +169,21 @@ public class CidadeEndpoint extends AbstractEndpoint<Cidade, CidadeService> {
     }
   }
 
+  /**
+   * #11 - Contagem de registros
+   *
+   * @return Quantidade de registro
+   */
+  @GetMapping(
+      path = "/count/all/",
+      produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
+  )
+  public ResponseWrapper<Long> countAll() {
+    try {
+      return new ResponseWrapper(getService().countAll(), HttpStatus.OK.value());
+    } catch (Throwable e) {
+      return new ResponseWrapper(e.getMessage(), HttpStatus.CONFLICT.value());
+    }
+  }
+
 }

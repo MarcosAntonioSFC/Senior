@@ -173,4 +173,14 @@ public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository>
   public Long countByColumn(final String column) throws ServiceException {
     return customCidadeRepository.countByColumn(column);
   }
+
+  /**
+   * Conta o total de registros no banco de dados.
+   *
+   * @return quantidade.
+   */
+  @Override
+  public long countAll() {
+    return getRepository().count();
+  }
 }
