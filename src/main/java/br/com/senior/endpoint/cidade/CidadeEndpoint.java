@@ -131,4 +131,25 @@ public class CidadeEndpoint extends AbstractEndpoint<Cidade, CidadeService> {
       return new ResponseWrapper<>(e.getMessage(), HttpStatus.CONFLICT.value());
     }
   }
+
+
+  /**
+   * #9 - Permite a busca de um registro baseando-se na coluna.
+   *
+   * @return retorna o objeto encontrado de acordo com a consulta.
+   */
+  @GetMapping(
+      path = "/",
+      produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
+  )
+  public CidadesResponseWrapper findByColumn(
+      @RequestParam("column") final String column,
+      @RequestParam("valoe") final String valor
+  ) {
+    try {
+      return new CidadesResponseWrapper(getService().findByColumn(column, valor), HttpStatus.OK.value());
+    } catch (Throwable e) {
+      return new CidadesResponseWrapper(e.getMessage(), HttpStatus.CONFLICT.value());
+    }
+  }
 }

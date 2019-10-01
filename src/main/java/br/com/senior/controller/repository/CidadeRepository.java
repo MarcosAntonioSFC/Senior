@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  * Repositório da cidade.
  */
 @Repository
-public interface CidadeRepository extends CommonRepository<Cidade> {
+public interface CidadeRepository extends CommonRepository<Cidade>, CustomCidadeRepository<Cidade> {
 
   List<Cidade> findCidadeByCapitalOrderByNome(final Boolean capital);
 

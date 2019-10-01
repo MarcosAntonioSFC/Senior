@@ -144,4 +144,16 @@ public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository>
     }
     return getRepository().findByEstado(uf);
   }
+
+  /**
+   * #9 - Permite a busca de um registro baseando-se na coluna.
+   *
+   * @param column coluna
+   * @param valor  valor
+   * @return objetos que obedecem a condição.
+   */
+  @Override
+  public List<Cidade> findByColumn(final String column, final String valor) {
+    return null;
+  }
 }
