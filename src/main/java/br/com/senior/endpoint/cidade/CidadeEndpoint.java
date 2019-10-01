@@ -152,4 +152,21 @@ public class CidadeEndpoint extends AbstractEndpoint<Cidade, CidadeService> {
     }
   }
 
+  /**
+   * #10 - Contagem da coluna
+   *
+   * @return Quantidade de registro não repetido dada coluna
+   */
+  @GetMapping(
+      path = "/count/",
+      produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
+  )
+  public ResponseWrapper<Long> countByColumn(@RequestParam("column") final String column) {
+    try {
+      return new ResponseWrapper(getService().countByColumn(column), HttpStatus.OK.value());
+    } catch (Throwable e) {
+      return new ResponseWrapper(e.getMessage(), HttpStatus.CONFLICT.value());
+    }
+  }
+
 }

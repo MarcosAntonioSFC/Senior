@@ -162,4 +162,15 @@ public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository>
   public List<Cidade> findByColumn(final String column, final String valor) throws ServiceException {
     return customCidadeRepository.findByColumnValor(column, valor);
   }
+
+  /**
+   * #10 - Contagem da coluna
+   *
+   * @param column coluna para contagem dos registros
+   * @return quantidade distintos de registro
+   */
+  @Override
+  public Long countByColumn(final String column) throws ServiceException {
+    return customCidadeRepository.countByColumn(column);
+  }
 }

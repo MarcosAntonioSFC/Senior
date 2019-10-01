@@ -9,4 +9,5 @@ public interface CustomCidadeRepository {
 
   List<Cidade> findByColumnValor(final String column, final String valor) throws ServiceException;
 
+  Long countByColumn(final String column) throws ServiceException;
 }

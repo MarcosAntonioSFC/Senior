@@ -25,4 +25,6 @@ public interface CidadeService extends Service<Cidade> {
   List<String> findByEstado(final String uf) throws ServiceException;
 
   List<Cidade> findByColumn(final String column, final String valor) throws ServiceException;
+
+  Long countByColumn(final String column) throws ServiceException;
 }

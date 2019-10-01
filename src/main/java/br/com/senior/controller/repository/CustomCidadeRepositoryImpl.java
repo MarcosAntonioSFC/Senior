@@ -13,7 +13,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -28,12 +30,14 @@ public class CustomCidadeRepositoryImpl implements CustomCidadeRepository {
   private static final String COLUNA_NOT_FOUND = "A coluna consulta é inválida";
 
   private final CidadeRepository cidadeRepository;
+  private final EntityManager em;
 
   private List<Class> annotations = Arrays.asList(CsvCustomBindByName.class, CsvBindByName.class);
 
   @Autowired
-  public CustomCidadeRepositoryImpl(CidadeRepository cidadeRepository) {
+  public CustomCidadeRepositoryImpl(CidadeRepository cidadeRepository, EntityManager em) {
     this.cidadeRepository = cidadeRepository;
+    this.em = em;
   }
 
   /**
@@ -60,13 +64,31 @@ public class CustomCidadeRepositoryImpl implements CustomCidadeRepository {
   }
 
   /**
+   * Efetua a contagem de registros distintos dada coluna.
+   *
+   * @param column coluna.
+   * @return quantidade.
+   */
+  @Override
+  public Long countByColumn(final String column) throws ServiceException {
+    final Field field = columnValid(column);
+
+    CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+    CriteriaQuery<Long> query = criteriaBuilder.createQuery(Long.class);
+    final Root<Cidade> from = query.from(Cidade.class);
+    query.select(criteriaBuilder.countDistinct(resolvePath(from, field.getName())));
+
+    return em.createQuery(query).getSingleResult();
+  }
+
+  /**
    * Devolve o path correto para a consulta.
    *
    * @param root root da consulta.
    * @param name nome do campo.
    * @return path.
    */
-  private Path<Object> resolvePath(final Root root, final String name) {
+  private Path resolvePath(final Root root, final String name) {
     Path path = root.get(name);
     if (path.getJavaType().getGenericSuperclass().equals(AbstractModel.class)) {
       path = path.get("id");

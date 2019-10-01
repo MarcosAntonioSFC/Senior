@@ -9,7 +9,7 @@ public class CustomCidadeRepositoryImplTest {
 
   @Test
   public void columnValid() throws ServiceException {
-    final CustomCidadeRepositoryImpl repository = new CustomCidadeRepositoryImpl(null);
+    final CustomCidadeRepositoryImpl repository = new CustomCidadeRepositoryImpl(null, null);
 
     try {
       Assert.assertNotNull("Coluna não encontrada", repository.columnValid("ibge_id"));
