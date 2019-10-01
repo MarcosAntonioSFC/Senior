@@ -46,7 +46,7 @@ public class CidadeServiceImplTest {
     }).when(estadoService).save(Mockito.anyList());
 
     Mockito.doReturn(resource).when(multipartFile).getInputStream();
-    CidadeServiceImpl service = new CidadeServiceImpl(repository, estadoService);
+    CidadeServiceImpl service = new CidadeServiceImpl(repository, null, estadoService);
     service = spy(service);
     service.upload(multipartFile);
 
@@ -56,7 +56,7 @@ public class CidadeServiceImplTest {
 
   @Test
   public void getEstadoCidadeMenorMaior() {
-    CidadeServiceImpl service = new CidadeServiceImpl(null, null);
+    CidadeServiceImpl service = new CidadeServiceImpl(null, null, null);
     service = spy(service);
 
     final List<EstadoCidade> all = doReturn(

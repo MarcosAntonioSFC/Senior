@@ -132,7 +132,6 @@ public class CidadeEndpoint extends AbstractEndpoint<Cidade, CidadeService> {
     }
   }
 
-
   /**
    * #9 - Permite a busca de um registro baseando-se na coluna.
    *
@@ -144,7 +143,7 @@ public class CidadeEndpoint extends AbstractEndpoint<Cidade, CidadeService> {
   )
   public CidadesResponseWrapper findByColumn(
       @RequestParam("column") final String column,
-      @RequestParam("valoe") final String valor
+      @RequestParam("valor") final String valor
   ) {
     try {
       return new CidadesResponseWrapper(getService().findByColumn(column, valor), HttpStatus.OK.value());
@@ -152,4 +151,5 @@ public class CidadeEndpoint extends AbstractEndpoint<Cidade, CidadeService> {
       return new CidadesResponseWrapper(e.getMessage(), HttpStatus.CONFLICT.value());
     }
   }
+
 }

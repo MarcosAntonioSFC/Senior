@@ -5,6 +5,7 @@ import br.com.senior.controller.abstracts.NotFoundServiceException;
 import br.com.senior.controller.abstracts.ServiceException;
 import br.com.senior.controller.others.CsvUtils;
 import br.com.senior.controller.repository.CidadeRepository;
+import br.com.senior.controller.repository.CustomCidadeRepository;
 import br.com.senior.model.Cidade;
 import br.com.senior.model.Estado;
 import br.com.senior.model.others.EstadoCidade;
@@ -32,16 +33,21 @@ public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository>
   private static final String CAPITAL_JA_EXISTE = "Já existe uma capital para este estado";
   private final EstadoService estadoService;
 
+  private final CustomCidadeRepository customCidadeRepository;
+
   /**
    * Construtor da classe.
    *
    * @param repository    CDI.
+   * @param customCidadeRepository CDI.
    * @param estadoService CDI do serviço estado.
    * @see EstadoService
    */
   @Autowired
-  public CidadeServiceImpl(final CidadeRepository repository, final EstadoService estadoService) {
+  public CidadeServiceImpl(final CidadeRepository repository, final CustomCidadeRepository customCidadeRepository,
+                           final EstadoService estadoService) {
     super(repository);
+    this.customCidadeRepository = customCidadeRepository;
     this.estadoService = estadoService;
   }
 
@@ -153,7 +159,7 @@ public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository>
    * @return objetos que obedecem a condição.
    */
   @Override
-  public List<Cidade> findByColumn(final String column, final String valor) {
-    return null;
+  public List<Cidade> findByColumn(final String column, final String valor) throws ServiceException {
+    return customCidadeRepository.findByColumnValor(column, valor);
   }
 }
