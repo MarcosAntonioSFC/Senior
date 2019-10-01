@@ -11,9 +11,15 @@ import java.util.List;
  */
 public interface Service<T extends AbstractModel> {
 
-  T save(T toSave);
+  T save(final T toSave);
 
-  List<T> save(List<T> toSave);
+  List<T> save(final List<T> toSave);
 
-  T getById(String id) throws NotFoundServiceException;
+  T getById(final String id) throws ServiceException;
+
+  T add(final T entity) throws ServiceException;
+
+  void beforeAdd(T entity) throws ServiceException;
+
+  void delete(final String id) throws ServiceException;
 }

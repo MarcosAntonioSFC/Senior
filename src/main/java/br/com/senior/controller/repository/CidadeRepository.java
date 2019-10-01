@@ -24,4 +24,9 @@ public interface CidadeRepository extends CommonRepository<Cidade> {
       + " order by contagem desc")
   List<EstadoCidade> findEstadoCidades();
 
+  @Query("select city.nome from br.com.senior.model.Cidade city where city.estado.id = :uf")
+  List<String> findByEstado(final String uf);
+
+  @Query("select city from br.com.senior.model.Cidade city where city.capital = true and city.estado.id = :uf")
+  Cidade findCapitalByEstado(final String uf);
 }

@@ -1,12 +1,14 @@
 package br.com.senior.controller.services;
 
 import br.com.senior.controller.abstracts.AbstractService;
+import br.com.senior.controller.abstracts.NotFoundServiceException;
 import br.com.senior.controller.abstracts.ServiceException;
 import br.com.senior.controller.others.CsvUtils;
 import br.com.senior.controller.repository.CidadeRepository;
 import br.com.senior.model.Cidade;
 import br.com.senior.model.Estado;
 import br.com.senior.model.others.EstadoCidade;
+import com.google.common.base.Strings;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,6 +28,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository> implements CidadeService {
 
   private static final String ERRO_NA_LEITURO_ARQUIVO = "Houve problemas na leitura do arquivo";
+  private static final String ESTADO_NOT_FOUND = "Estado não informado";
+  private static final String CAPITAL_JA_EXISTE = "Já existe uma capital para este estado";
   private final EstadoService estadoService;
 
   /**
@@ -91,5 +95,53 @@ public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository>
   @Override
   public List<EstadoCidade> getCidadeEstados() {
     return getRepository().findEstadoCidades();
+  }
+
+  /**
+   * Método com a validação se o estado vinculado a cidade já existe.
+   *
+   * @param entity entidade.
+   */
+  @Override
+  public void beforeAdd(final Cidade entity) throws ServiceException {
+    super.beforeAdd(entity);
+    Estado estado;
+    try {
+      estado = estadoService.getById(entity.getId());
+    } catch (NotFoundServiceException e) {
+      estado = estadoService.save(entity.getEstado());
+    }
+
+    if (entity.getCapital()) {
+      final Cidade capital = getCapitalByEstado(estado.getId());
+      if (null != capital) {
+        throw new ServiceException(CAPITAL_JA_EXISTE);
+      }
+    }
+
+    entity.setEstado(estado);
+  }
+
+  /**
+   * Busca a capital por estado.
+   *
+   * @return cidade capital por estado.
+   */
+  private Cidade getCapitalByEstado(final String uf) {
+    return getRepository().findCapitalByEstado(uf);
+  }
+
+  /**
+   * Efetua a busca das cidades de um estado.
+   *
+   * @param uf estado para consultar as cidades.
+   * @return lista de cidades respetiva ao estado.
+   */
+  @Override
+  public List<String> findByEstado(final String uf) throws ServiceException {
+    if (Strings.isNullOrEmpty(uf)) {
+      throw new ServiceException(ESTADO_NOT_FOUND);
+    }
+    return getRepository().findByEstado(uf);
   }
 }

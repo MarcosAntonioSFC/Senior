@@ -21,4 +21,6 @@ public interface CidadeService extends Service<Cidade> {
   List<EstadoCidade> getEstadoCidadeMenorMaior();
 
   List<EstadoCidade> getCidadeEstados();
+
+  List<String> findByEstado(final String uf) throws ServiceException;
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,9 +54,9 @@ public class CidadeEndpoint extends AbstractEndpoint<Cidade, CidadeService> {
     try {
       logger.info("Recebendo aquivo");
       final List<Cidade> cidades = getService().upload(file);
-      return new CidadesResponseWrapper(MessageFormat.format("Importado {0} cidades com Sucesso!", cidades.size()), 200);
+      return new CidadesResponseWrapper(MessageFormat.format("Importado {0} cidades com Sucesso!", cidades.size()), HttpStatus.OK.value());
     } catch (ServiceException e) {
-      return new CidadesResponseWrapper(e.getMessage(), 409);
+      return new CidadesResponseWrapper(e.getMessage(), HttpStatus.CONFLICT.value());
     }
   }
 
@@ -71,9 +72,9 @@ public class CidadeEndpoint extends AbstractEndpoint<Cidade, CidadeService> {
   public CidadesResponseWrapper capitais() {
     try {
       logger.info("Consultando capitais");
-      return new CidadesResponseWrapper(getService().getCapitais(), 200);
+      return new CidadesResponseWrapper(getService().getCapitais(), HttpStatus.OK.value());
     } catch (Throwable e) {
-      return new CidadesResponseWrapper(e.getMessage(), 409);
+      return new CidadesResponseWrapper(e.getMessage(), HttpStatus.CONFLICT.value());
     }
   }
 
@@ -89,9 +90,9 @@ public class CidadeEndpoint extends AbstractEndpoint<Cidade, CidadeService> {
   public EstadoCidadesResponseWrapper estadoCidadeMenorMaior() {
     try {
       logger.info("Consultando maior e menor estado");
-      return new EstadoCidadesResponseWrapper(getService().getEstadoCidadeMenorMaior(), 200);
+      return new EstadoCidadesResponseWrapper(getService().getEstadoCidadeMenorMaior(), HttpStatus.OK.value());
     } catch (Throwable e) {
-      return new EstadoCidadesResponseWrapper(e.getMessage(), 409);
+      return new EstadoCidadesResponseWrapper(e.getMessage(), HttpStatus.CONFLICT.value());
     }
   }
 
@@ -104,14 +105,30 @@ public class CidadeEndpoint extends AbstractEndpoint<Cidade, CidadeService> {
       path = "/cidades/estados/",
       produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
   )
-  public EstadoCidadesResponseWrapper cidadeEstados() {
+  public EstadoCidadesResponseWrapper byEstado() {
     try {
       logger.info("Consultando Estado e Cidades");
-      return new EstadoCidadesResponseWrapper(getService().getCidadeEstados(), 200);
+      return new EstadoCidadesResponseWrapper(getService().getCidadeEstados(), HttpStatus.OK.value());
     } catch (Throwable e) {
-      return new EstadoCidadesResponseWrapper(e.getMessage(), 409);
+      return new EstadoCidadesResponseWrapper(e.getMessage(), HttpStatus.CONFLICT.value());
     }
   }
 
-
+  /**
+   * #6 - Cidades por estado.
+   *
+   * @return Todos as cidades do respetivo estado.
+   */
+  @GetMapping(
+      path = "/by/estado/",
+      produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
+  )
+  public ResponseWrapper<List<String>> byEstado(@RequestParam("uf") final String uf) {
+    try {
+      logger.info("Consultando Cidades por Estado");
+      return new ResponseWrapper<>(getService().findByEstado(uf), HttpStatus.OK.value());
+    } catch (Throwable e) {
+      return new ResponseWrapper<>(e.getMessage(), HttpStatus.CONFLICT.value());
+    }
+  }
 }

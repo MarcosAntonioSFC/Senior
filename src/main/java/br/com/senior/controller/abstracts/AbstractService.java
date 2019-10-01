@@ -14,7 +14,6 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
 
-import org.hibernate.service.spi.ServiceException;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @param <T> objeto generics indicando o model.
  */
 public abstract class AbstractService<T extends AbstractModel, R extends CommonRepository<T>> implements Service<T> {
+
+  private static final String DADO_NAO_INFORMADO = "Dados não informados.";
 
   private static final String IDENTIFICADOR_NOT_FOUND = "Identificador não informado";
   /**
@@ -78,7 +79,7 @@ public abstract class AbstractService<T extends AbstractModel, R extends CommonR
    * @throws NotFoundServiceException exceção caso não encontre o respectivo registro.
    */
   @Override
-  public T getById(final String id) throws NotFoundServiceException {
+  public T getById(final String id) throws ServiceException {
     if (Strings.isNullOrEmpty(id)) {
       throw new ServiceException(IDENTIFICADOR_NOT_FOUND);
     }
@@ -101,6 +102,44 @@ public abstract class AbstractService<T extends AbstractModel, R extends CommonR
     if (!validate.isEmpty()) {
       throw new ConstraintViolationException(validate);
     }
+  }
+
+  /**
+   * #7 - Método abstrato para adicionar uma nova entidade.
+   *
+   * @param entity entidade.
+   * @return entidade persistida.
+   */
+  @Override
+  public T add(final T entity) throws br.com.senior.controller.abstracts.ServiceException {
+    if (null == entity) {
+      throw new ServiceException(DADO_NAO_INFORMADO);
+    }
+
+    validationEntity(entity);
+    beforeAdd(entity);
+    return save(entity);
+  }
+
+  /**
+   * Método para adicionar e validar valores na entidade pela subclasse.
+   *
+   * @param entity entidade.
+   */
+  @Override
+  public void beforeAdd(final T entity) throws br.com.senior.controller.abstracts.ServiceException {
+    //
+  }
+
+  /**
+   * #8 - Permite a exclusao de um registro.
+   *
+   * @param id identificador do registro.
+   */
+  @Override
+  public void delete(final String id) throws ServiceException {
+    final T entity = getById(id);
+    getRepository().delete(entity);
   }
 
   /**
