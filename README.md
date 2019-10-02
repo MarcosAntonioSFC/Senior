@@ -38,7 +38,7 @@ para seu RClient
 **@POST** `http://localhost:9000/senior/cidade/upload/`
 
 #### 2 - Retornar somente as cidades que são capitais ordenadas por nome;
-**@GET** http://localhost:9000/senior/cidade/capitais/
+**@GET** `http://localhost:9000/senior/cidade/capitais/`
 
 #### 3 - Retornar o nome do estado com a maior e menor quantidade de cidades e a quantidade de cidades;
 **@GET** `http://localhost:9000/senior/cidade/tamanho/estados/cidades/`
