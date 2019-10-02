@@ -186,7 +186,6 @@ public class CidadeEndpoint extends AbstractEndpoint<Cidade, CidadeService> {
     }
   }
 
-
   /**
    * #12 - Cidades mais distantes
    *

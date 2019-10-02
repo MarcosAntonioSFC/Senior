@@ -188,16 +188,30 @@ public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository>
   }
 
   /**
-   * Calcula a cidades mais distantes.
+   * Varre a lista de cidades atuais para encontrar as as mais distantes.
    *
-   * @return
+   * @return as 2 cidades mais distantes.
    */
   @Override
   public List<Cidade> maisDistantes() {
     final List<Cidade> all = getRepository().findAll();
-    calcularDistancia(new Cidade(), new Cidade());
 
-    return null;
+    double ultimaDistancia = 0;
+    Cidade cidadeDistante1 = null;
+    Cidade cidadeDistante2 = null;
+
+    for (final Cidade cidade1 : all) {
+      for (final Cidade cidade2 : all) {
+        final double distancia = calcularDistancia(cidade1, cidade2);
+        if (distancia > ultimaDistancia) {
+          ultimaDistancia = distancia;
+          cidadeDistante1 = cidade1;
+          cidadeDistante2 = cidade2;
+        }
+      }
+    }
+
+    return Arrays.asList(cidadeDistante1, cidadeDistante2);
   }
 
   /**

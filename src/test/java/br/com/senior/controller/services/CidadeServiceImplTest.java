@@ -27,6 +27,26 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class CidadeServiceImplTest {
 
+  final Cidade serrana = new Cidade();
+  final Cidade serraAzul = new Cidade();
+  final Cidade sertaozinho = new Cidade();
+  final Cidade saoPaulo = new Cidade();
+
+  public CidadeServiceImplTest() {
+    serrana.setId("1");
+    serrana.setLongitude(new BigDecimal("-47.5977620963"));
+    serrana.setLatitude(new BigDecimal("-21.209477985"));
+    serraAzul.setId("2");
+    serraAzul.setLongitude(new BigDecimal("-47.5632499203"));
+    serraAzul.setLatitude(new BigDecimal("-21.3102876657"));
+    sertaozinho.setId("3");
+    sertaozinho.setLongitude(new BigDecimal("-47.991148431"));
+    sertaozinho.setLatitude(new BigDecimal("-21.137021505"));
+    saoPaulo.setId("4");
+    saoPaulo.setLongitude(new BigDecimal("-46.5703831821"));
+    saoPaulo.setLatitude(new BigDecimal("-23.5673865"));
+  }
+
   /**
    * Garante a chamada de todos os métodos e garante o processo do método.
    *
@@ -78,25 +98,23 @@ public class CidadeServiceImplTest {
   @Test
   public void calcularDistancia() {
     CidadeServiceImpl service = new CidadeServiceImpl(null, null, null);
-    final Cidade serrana = new Cidade();
-    serrana.setLongitude(new BigDecimal("-47.5977620963"));
-    serrana.setLatitude(new BigDecimal("-21.209477985"));
-
-    final Cidade serraAzul = new Cidade();
-    serraAzul.setLongitude(new BigDecimal("-47.5632499203"));
-    serraAzul.setLatitude(new BigDecimal("-21.3102876657"));
-
-    final Cidade sertaozinho = new Cidade();
-    sertaozinho.setLongitude(new BigDecimal("-47.991148431"));
-    sertaozinho.setLatitude(new BigDecimal("-21.137021505"));
-
-    final Cidade saoPaulo = new Cidade();
-    saoPaulo.setLongitude(new BigDecimal("-46.5703831821"));
-    saoPaulo.setLatitude(new BigDecimal("-23.5673865"));
 
     System.out.println(MessageFormat.format("Serrana -> Sertãozinho = {0}", service.calcularDistancia(serrana, sertaozinho)));
     System.out.println(MessageFormat.format("Serrana -> Serra Azul = {0}", service.calcularDistancia(serrana, serraAzul)));
     System.out.println(MessageFormat.format("Serrana -> São Paulo = {0}", service.calcularDistancia(serrana, saoPaulo)));
     System.out.println(MessageFormat.format("Sertãozinho -> São Paulo = {0}", service.calcularDistancia(sertaozinho, saoPaulo)));
+  }
+
+  @Test
+  public void maisDistantes() {
+    final CidadeRepository repository = Mockito.mock(CidadeRepository.class);
+    doReturn(Arrays.asList(serrana, serraAzul, sertaozinho, saoPaulo)).when(repository).findAll();
+    final CidadeServiceImpl service = new CidadeServiceImpl(repository, null, null);
+
+    final List<Cidade> cidades = service.maisDistantes();
+    Assert.assertNotNull(cidades);
+    Assert.assertEquals(2, cidades.size());
+    Assert.assertTrue(cidades.stream().anyMatch(x -> x.equals(sertaozinho)));
+    Assert.assertTrue(cidades.stream().anyMatch(x -> x.equals(saoPaulo)));
   }
 }
