@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface Service<T extends AbstractModel> {
 
-  T save(final T toSave);
+  T save(final T toSave) throws ServiceException;
 
   List<T> save(final List<T> toSave);
 

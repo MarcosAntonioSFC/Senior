@@ -70,7 +70,7 @@ public abstract class AbstractEndpoint<T extends AbstractModel, S extends Servic
   public ResponseWrapper add(@RequestBody T entity) {
     try {
       return new ResponseWrapper(getService().add(entity), HttpStatus.OK.value());
-    } catch (Exception | ServiceException e) {
+    } catch (ServiceException e) {
       return new ResponseWrapper(e.getMessage(), HttpStatus.CONFLICT.value());
     }
   }

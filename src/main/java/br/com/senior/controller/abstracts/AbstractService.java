@@ -56,6 +56,23 @@ public abstract class AbstractService<T extends AbstractModel, R extends CommonR
   }
 
   /**
+   * #7 - Método abstrato para adicionar uma nova entidade.
+   *
+   * @param entity entidade.
+   * @return entidade persistida.
+   */
+  @Override
+  public T add(final T entity) throws ServiceException {
+    if (null == entity) {
+      throw new ServiceException(DADO_NAO_INFORMADO);
+    }
+
+    validationEntity(entity);
+    beforeAdd(entity);
+    return save(entity);
+  }
+
+  /**
    * Método abstrato para salva uma entidade.
    *
    * @param toSave objeto que será salvo.
@@ -102,23 +119,6 @@ public abstract class AbstractService<T extends AbstractModel, R extends CommonR
     if (!validate.isEmpty()) {
       throw new ConstraintViolationException(validate);
     }
-  }
-
-  /**
-   * #7 - Método abstrato para adicionar uma nova entidade.
-   *
-   * @param entity entidade.
-   * @return entidade persistida.
-   */
-  @Override
-  public T add(final T entity) throws br.com.senior.controller.abstracts.ServiceException {
-    if (null == entity) {
-      throw new ServiceException(DADO_NAO_INFORMADO);
-    }
-
-    validationEntity(entity);
-    beforeAdd(entity);
-    return save(entity);
   }
 
   /**
