@@ -88,8 +88,8 @@ para seu RClient
 **@GET** `http://localhost:9000/senior/cidade/mais/distantes/` 
 
 ## Padrão do retorno
-###Pensando em facilitar uma possível integração com o frontend, foi definido um wrapper para o retorno dos request.
-###Este wrapper contem a seguinte estrutura
+### Pensando em facilitar uma possível integração com o frontend, foi definido um wrapper para o retorno dos request.
+### Este wrapper contem a seguinte estrutura
 `
 {
     "data": null,
@@ -98,6 +98,6 @@ para seu RClient
 }
 `
 ## A saber:
-###data -> dados da resposta
-###message -> mensagem do servidor ao usuário
-###status -> http code 
+### data -> dados da resposta
+### message -> mensagem do servidor ao usuário
+### status -> http code 
