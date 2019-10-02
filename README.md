@@ -32,3 +32,4 @@ desenvolvimento. Para facilitar os testes basta importar o arquivo que estão no
 para seu RClient 
 
 #### API's: Seguem o Padrão Resful
+- Finalizar documentação a partir daqui
