@@ -112,7 +112,7 @@ public class CustomCidadeRepositoryImpl implements CustomCidadeRepository {
     } else if (from.getJavaType().equals(BigDecimal.class)) {
       predicate = criteriaBuilder.equal(from.as(BigDecimal.class), new BigDecimal(valor));
     } else {
-      predicate = criteriaBuilder.like(from.as(String.class), MessageFormat.format("%{0}%", valor));
+      predicate = criteriaBuilder.like(criteriaBuilder.lower(from.as(String.class)), MessageFormat.format("%{0}%", valor.toLowerCase()));
     }
 
     return predicate;

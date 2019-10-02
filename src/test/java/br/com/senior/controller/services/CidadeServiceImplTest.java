@@ -3,6 +3,7 @@ package br.com.senior.controller.services;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 
+import br.com.senior.controller.abstracts.NotFoundServiceException;
 import br.com.senior.controller.abstracts.ServiceException;
 import br.com.senior.controller.repository.CidadeRepository;
 import br.com.senior.model.Cidade;
@@ -78,7 +79,7 @@ public class CidadeServiceImplTest {
   }
 
   @Test
-  public void getEstadoCidadeMenorMaior() {
+  public void getEstadoCidadeMenorMaior() throws NotFoundServiceException {
     CidadeServiceImpl service = new CidadeServiceImpl(null, null, null);
     service = spy(service);
 
@@ -106,7 +107,7 @@ public class CidadeServiceImplTest {
   }
 
   @Test
-  public void maisDistantes() {
+  public void maisDistantes() throws NotFoundServiceException {
     final CidadeRepository repository = Mockito.mock(CidadeRepository.class);
     doReturn(Arrays.asList(serrana, serraAzul, sertaozinho, saoPaulo)).when(repository).findAll();
     final CidadeServiceImpl service = new CidadeServiceImpl(repository, null, null);

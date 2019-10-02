@@ -1,5 +1,6 @@
 package br.com.senior.controller.services;
 
+import br.com.senior.controller.abstracts.NotFoundServiceException;
 import br.com.senior.controller.abstracts.Service;
 import br.com.senior.controller.abstracts.ServiceException;
 import br.com.senior.model.Cidade;
@@ -18,9 +19,9 @@ public interface CidadeService extends Service<Cidade> {
 
   List<Cidade> getCapitais();
 
-  List<EstadoCidade> getEstadoCidadeMenorMaior();
+  List<EstadoCidade> getEstadoCidadeMenorMaior() throws NotFoundServiceException;
 
-  List<EstadoCidade> getCidadeEstados();
+  List<EstadoCidade> getCidadeEstados() throws NotFoundServiceException;
 
   List<String> findByEstado(final String uf) throws ServiceException;
 
@@ -30,5 +31,5 @@ public interface CidadeService extends Service<Cidade> {
 
   long countAll();
 
-  List<Cidade> maisDistantes();
+  List<Cidade> maisDistantes() throws NotFoundServiceException;
 }

@@ -1,5 +1,6 @@
 package br.com.senior.endpoint.cidade;
 
+import br.com.senior.controller.abstracts.NotFoundServiceException;
 import br.com.senior.controller.abstracts.ServiceException;
 import br.com.senior.controller.services.CidadeService;
 import br.com.senior.endpoint.abstracts.ResponseWrapper;
@@ -91,7 +92,7 @@ public class CidadeEndpoint extends AbstractEndpoint<Cidade, CidadeService> {
     try {
       logger.info("Consultando maior e menor estado");
       return new EstadoCidadesResponseWrapper(getService().getEstadoCidadeMenorMaior(), HttpStatus.OK.value());
-    } catch (Throwable e) {
+    } catch (NotFoundServiceException e) {
       return new EstadoCidadesResponseWrapper(e.getMessage(), HttpStatus.CONFLICT.value());
     }
   }
@@ -105,7 +106,7 @@ public class CidadeEndpoint extends AbstractEndpoint<Cidade, CidadeService> {
       path = "/cidades/estados/",
       produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
   )
-  public EstadoCidadesResponseWrapper byEstado() {
+  public EstadoCidadesResponseWrapper cidadeEstados() {
     try {
       logger.info("Consultando Estado e Cidades");
       return new EstadoCidadesResponseWrapper(getService().getCidadeEstados(), HttpStatus.OK.value());
@@ -147,7 +148,7 @@ public class CidadeEndpoint extends AbstractEndpoint<Cidade, CidadeService> {
   ) {
     try {
       return new CidadesResponseWrapper(getService().findByColumn(column, valor), HttpStatus.OK.value());
-    } catch (Throwable e) {
+    } catch (ServiceException e) {
       return new CidadesResponseWrapper(e.getMessage(), HttpStatus.CONFLICT.value());
     }
   }
@@ -164,7 +165,7 @@ public class CidadeEndpoint extends AbstractEndpoint<Cidade, CidadeService> {
   public ResponseWrapper<Long> countByColumn(@RequestParam("column") final String column) {
     try {
       return new ResponseWrapper(getService().countByColumn(column), HttpStatus.OK.value());
-    } catch (Throwable e) {
+    } catch (ServiceException e) {
       return new ResponseWrapper(e.getMessage(), HttpStatus.CONFLICT.value());
     }
   }
@@ -198,7 +199,7 @@ public class CidadeEndpoint extends AbstractEndpoint<Cidade, CidadeService> {
   public CidadesResponseWrapper maisDistantes() {
     try {
       return new CidadesResponseWrapper(getService().maisDistantes(), HttpStatus.OK.value());
-    } catch (Throwable e) {
+    } catch (NotFoundServiceException e) {
       return new CidadesResponseWrapper(e.getMessage(), HttpStatus.CONFLICT.value());
     }
   }

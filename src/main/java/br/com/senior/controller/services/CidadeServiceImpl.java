@@ -34,6 +34,7 @@ public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository>
   private static final String CAPITAL_JA_EXISTE = "Já existe uma capital para este estado";
   private static final double RAIO_TERRA = 6371.0;
   private static final BigDecimal DOIS = new BigDecimal("2");
+  private static final String REGISTROS = "Não existe nenhum registro";
   private final EstadoService estadoService;
 
   private final CustomCidadeRepository customCidadeRepository;
@@ -88,7 +89,7 @@ public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository>
    * @return estdado maior e menor de acordo com a quantidade de cidade.
    */
   @Override
-  public List<EstadoCidade> getEstadoCidadeMenorMaior() {
+  public List<EstadoCidade> getEstadoCidadeMenorMaior() throws NotFoundServiceException {
     final List<EstadoCidade> estadoCidades = getCidadeEstados();
     return Arrays.asList(
         estadoCidades.stream().min(Comparator.comparing(EstadoCidade::getQuantidade)).get(),
@@ -102,8 +103,13 @@ public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository>
    * @return Lista dos estados com suas respectivas quantidades de municipios.
    */
   @Override
-  public List<EstadoCidade> getCidadeEstados() {
-    return getRepository().findEstadoCidades();
+  public List<EstadoCidade> getCidadeEstados() throws NotFoundServiceException {
+    final List<EstadoCidade> estadoCidades = getRepository().findEstadoCidades();
+    if (estadoCidades.isEmpty()) {
+      throw new NotFoundServiceException(REGISTROS);
+    }
+
+    return estadoCidades;
   }
 
   /**
@@ -193,9 +199,11 @@ public class CidadeServiceImpl extends AbstractService<Cidade, CidadeRepository>
    * @return as 2 cidades mais distantes.
    */
   @Override
-  public List<Cidade> maisDistantes() {
+  public List<Cidade> maisDistantes() throws NotFoundServiceException {
     final List<Cidade> all = getRepository().findAll();
-
+    if (all.isEmpty()) {
+      throw new NotFoundServiceException(REGISTROS);
+    }
     double ultimaDistancia = 0;
     Cidade cidadeDistante1 = null;
     Cidade cidadeDistante2 = null;
