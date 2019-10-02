@@ -1,0 +1,845 @@
+{
+  "front-version": "2.21.1",
+  "version": 3,
+  "nodes": [
+    {
+      "type": "Project",
+      "id": "3d432e01-f935-4293-880f-5fef4f93b71e",
+      "lastModified": "2019-10-02T07:07:07.761-03:00",
+      "name": "Senior"
+    },
+    {
+      "type": "Service",
+      "id": "43d4bc7b-a561-4563-8881-0f7e06d726ff",
+      "lastModified": "2019-09-28T14:06:50.867-03:00",
+      "name": "Cidade",
+      "parentId": "3d432e01-f935-4293-880f-5fef4f93b71e"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "multipart/form-data",
+          "items": [
+            {
+              "enabled": true,
+              "type": "File",
+              "name": "file"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:9000",
+        "path": "/senior/cidade/upload/"
+      },
+      "id": "c80eb45c-377b-4182-9802-88c99a08a64a",
+      "lastModified": "2019-10-02T06:29:04.941-03:00",
+      "name": "#1 - Upload",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "multipart/form-data"
+        }
+      ],
+      "metaInfo": {
+        "ownerId": "facebook|1946639252013161"
+      },
+      "parentId": "43d4bc7b-a561-4563-8881-0f7e06d726ff"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "multipart/form-data",
+          "items": [
+            {
+              "type": "File",
+              "name": "file"
+            }
+          ]
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"id\": \"7777777\",\n  \"estado\": {\n    \"id\": \"SP\",\n    \"sigla\": \"SP\"\n  },\n  \"nome\": \"Ribeirão Preto\",\n  \"capital\": false,\n  \"latitude\": -11.9355403048,\n  \"longitude\": -61.9998238963,\n  \"noAccents\": \"Ribeirao Preto\",\n  \"nomeAlternativo\": \"\",\n  \"microRegiao\": \"Ribeirao Preto\",\n  \"mesoRegiao\": \"Ribeirao Preto\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": [
+            {
+              "enabled": true,
+              "name": "column",
+              "value": "name"
+            }
+          ]
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:9000",
+        "path": "/senior/cidade/count/"
+      },
+      "id": "3b452f85-4ba0-4bc1-a38a-d87f89ca3c13",
+      "lastModified": "2019-10-02T06:29:18.898-03:00",
+      "name": "#10 - Count Distinct",
+      "headers": [],
+      "metaInfo": {
+        "ownerId": "facebook|1946639252013161"
+      },
+      "parentId": "43d4bc7b-a561-4563-8881-0f7e06d726ff"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "multipart/form-data",
+          "items": [
+            {
+              "type": "File",
+              "name": "file"
+            }
+          ]
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"id\": \"7777777\",\n  \"estado\": {\n    \"id\": \"SP\",\n    \"sigla\": \"SP\"\n  },\n  \"nome\": \"Ribeirão Preto\",\n  \"capital\": false,\n  \"latitude\": -11.9355403048,\n  \"longitude\": -61.9998238963,\n  \"noAccents\": \"Ribeirao Preto\",\n  \"nomeAlternativo\": \"\",\n  \"microRegiao\": \"Ribeirao Preto\",\n  \"mesoRegiao\": \"Ribeirao Preto\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:9000",
+        "path": "/senior/cidade/count/all/"
+      },
+      "id": "322c11cc-4c3f-4c36-a404-02b1545c1a73",
+      "lastModified": "2019-10-01T07:18:35.088-03:00",
+      "name": "#11 - Count All",
+      "headers": [],
+      "metaInfo": {
+        "ownerId": "facebook|1946639252013161"
+      },
+      "parentId": "43d4bc7b-a561-4563-8881-0f7e06d726ff"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "multipart/form-data",
+          "items": [
+            {
+              "type": "File",
+              "name": "file"
+            }
+          ]
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"id\": \"7777777\",\n  \"estado\": {\n    \"id\": \"SP\",\n    \"sigla\": \"SP\"\n  },\n  \"nome\": \"Ribeirão Preto\",\n  \"capital\": false,\n  \"latitude\": -11.9355403048,\n  \"longitude\": -61.9998238963,\n  \"noAccents\": \"Ribeirao Preto\",\n  \"nomeAlternativo\": \"\",\n  \"microRegiao\": \"Ribeirao Preto\",\n  \"mesoRegiao\": \"Ribeirao Preto\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:9000",
+        "path": "/senior/cidade/mais/distantes/"
+      },
+      "id": "577e11cb-1ada-4e2d-a5d9-74e45a01797c",
+      "lastModified": "2019-10-02T06:19:24.994-03:00",
+      "name": "#12 - Mais Distantes",
+      "headers": [],
+      "metaInfo": {
+        "ownerId": "facebook|1946639252013161"
+      },
+      "parentId": "43d4bc7b-a561-4563-8881-0f7e06d726ff"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "multipart/form-data",
+          "items": [
+            {
+              "type": "File",
+              "name": "file"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:9000",
+        "path": "/senior/cidade/capitais/"
+      },
+      "id": "bf46d155-bc2a-4a18-ab02-8b3e11641663",
+      "lastModified": "2019-09-30T21:11:33.211-03:00",
+      "name": "#2 - Capitais",
+      "headers": [],
+      "metaInfo": {
+        "ownerId": "facebook|1946639252013161"
+      },
+      "parentId": "43d4bc7b-a561-4563-8881-0f7e06d726ff"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "multipart/form-data",
+          "items": [
+            {
+              "type": "File",
+              "name": "file"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:9000",
+        "path": "/senior/cidade/tamanho/estados/cidades/"
+      },
+      "id": "5f15cff3-45e1-48c9-b144-87b1e6eb32b2",
+      "lastModified": "2019-09-30T21:12:17.796-03:00",
+      "name": "#3 - Estados Cidades",
+      "headers": [],
+      "metaInfo": {
+        "ownerId": "facebook|1946639252013161"
+      },
+      "parentId": "43d4bc7b-a561-4563-8881-0f7e06d726ff"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "multipart/form-data",
+          "items": [
+            {
+              "type": "File",
+              "name": "file"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:9000",
+        "path": "/senior/cidade/cidades/estados/"
+      },
+      "id": "b3ceeab4-c379-4495-bad7-bafaaea3e903",
+      "lastModified": "2019-09-30T21:12:08.530-03:00",
+      "name": "#4 - Cidades Estados ",
+      "headers": [],
+      "metaInfo": {
+        "ownerId": "facebook|1946639252013161"
+      },
+      "parentId": "43d4bc7b-a561-4563-8881-0f7e06d726ff"
+    },
+    {
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "multipart/form-data",
+          "items": [
+            {
+              "type": "File",
+              "name": "file"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:9000",
+        "path": "/senior/cidade/2911253/"
+      },
+      "id": "a267f9a6-9ff1-49a0-b807-9d3cb3143656",
+      "lastModified": "2019-09-30T21:32:56.585-03:00",
+      "name": "#5 - Cidade por Id",
+      "headers": [],
+      "metaInfo": {
+        "ownerId": "facebook|1946639252013161"
+      },
+      "parentId": "43d4bc7b-a561-4563-8881-0f7e06d726ff"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "multipart/form-data",
+          "items": [
+            {
+              "type": "File",
+              "name": "file"
+            }
+          ]
+        },
+        "bodyType": "Form",
+        "autoSetLength": true
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": [
+            {
+              "enabled": true,
+              "name": "uf",
+              "value": "SP"
+            }
+          ]
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:9000",
+        "path": "/senior/cidade/by/estado/"
+      },
+      "id": "cd6a63b2-13a5-415f-b496-a6c85ed09565",
+      "lastModified": "2019-09-30T21:12:44.049-03:00",
+      "name": "#6 - Cidade por Estado",
+      "headers": [],
+      "metaInfo": {
+        "ownerId": "facebook|1946639252013161"
+      },
+      "parentId": "43d4bc7b-a561-4563-8881-0f7e06d726ff"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "multipart/form-data",
+          "items": [
+            {
+              "type": "File",
+              "name": "file"
+            }
+          ]
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"id\": \"7777777\",\n  \"estado\": {\n    \"id\": \"SP\",\n    \"sigla\": \"SP\"\n  },\n  \"nome\": \"Ribeirão Preto\",\n  \"capital\": false,\n  \"latitude\": -11.9355403048,\n  \"longitude\": -61.9998238963,\n  \"noAccents\": \"Ribeirao Preto\",\n  \"nomeAlternativo\": \"\",\n  \"microRegiao\": \"Ribeirao Preto\",\n  \"mesoRegiao\": \"Ribeirao Preto\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:9000",
+        "path": "/senior/cidade/"
+      },
+      "id": "706fa99e-d32a-47af-a95d-8a688c8315fa",
+      "lastModified": "2019-10-02T06:35:54.431-03:00",
+      "name": "#7 - New",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "ownerId": "facebook|1946639252013161"
+      },
+      "parentId": "43d4bc7b-a561-4563-8881-0f7e06d726ff"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "requestBody": true,
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+        "name": "POST"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "multipart/form-data",
+          "items": [
+            {
+              "type": "File",
+              "name": "file"
+            }
+          ]
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"id\": \"7777777\",\n  \"estado\": {\n    \"id\": \"SP\",\n    \"sigla\": \"SP\"\n  },\n  \"nome\": \"Ribeirão Pretoaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n  \"capital\": false,\n  \"latitude\": -11.9355403048,\n  \"longitude\": -61.9998238963,\n  \"noAccents\": \"Ribeirao Preto\",\n  \"nomeAlternativo\": \"\",\n  \"microRegiao\": \"Ribeirao Preto\",\n  \"mesoRegiao\": \"Ribeirao Preto\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:9000",
+        "path": "/senior/cidade/"
+      },
+      "id": "caaaa80f-beaf-4cfb-84a4-a25e4dc523ee",
+      "lastModified": "2019-10-02T07:07:07.761-03:00",
+      "name": "#7 - New (Erro inesperado)",
+      "headers": [
+        {
+          "enabled": true,
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "metaInfo": {
+        "ownerId": "facebook|1946639252013161"
+      },
+      "parentId": "43d4bc7b-a561-4563-8881-0f7e06d726ff"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.5",
+        "name": "DELETE"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "multipart/form-data",
+          "items": [
+            {
+              "type": "File",
+              "name": "file"
+            }
+          ]
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"id\": \"7777777\",\n  \"estado\": {\n    \"id\": \"SP\",\n    \"sigla\": \"SP\"\n  },\n  \"nome\": \"Ribeirão Preto\",\n  \"capital\": false,\n  \"latitude\": -11.9355403048,\n  \"longitude\": -61.9998238963,\n  \"noAccents\": \"Ribeirao Preto\",\n  \"nomeAlternativo\": \"\",\n  \"microRegiao\": \"Ribeirao Preto\",\n  \"mesoRegiao\": \"Ribeirao Preto\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": []
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:9000",
+        "path": "/senior/cidade/7777777/"
+      },
+      "id": "82d757fb-a95d-4929-ba8e-81c049a12ffe",
+      "lastModified": "2019-09-30T21:38:40.301-03:00",
+      "name": "#8 - Remove",
+      "headers": [],
+      "metaInfo": {
+        "ownerId": "facebook|1946639252013161"
+      },
+      "parentId": "43d4bc7b-a561-4563-8881-0f7e06d726ff"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "multipart/form-data",
+          "items": [
+            {
+              "type": "File",
+              "name": "file"
+            }
+          ]
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"id\": \"7777777\",\n  \"estado\": {\n    \"id\": \"SP\",\n    \"sigla\": \"SP\"\n  },\n  \"nome\": \"Ribeirão Preto\",\n  \"capital\": false,\n  \"latitude\": -11.9355403048,\n  \"longitude\": -61.9998238963,\n  \"noAccents\": \"Ribeirao Preto\",\n  \"nomeAlternativo\": \"\",\n  \"microRegiao\": \"Ribeirao Preto\",\n  \"mesoRegiao\": \"Ribeirao Preto\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": [
+            {
+              "enabled": true,
+              "name": "column",
+              "value": "capital"
+            },
+            {
+              "enabled": true,
+              "name": "valor",
+              "value": "true"
+            }
+          ]
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:9000",
+        "path": "/senior/cidade/"
+      },
+      "id": "b0b398fc-696a-43b8-9984-df1aaefa8f9f",
+      "lastModified": "2019-10-01T06:29:28.296-03:00",
+      "name": "#9 - Find Column (capital)",
+      "headers": [],
+      "metaInfo": {
+        "ownerId": "facebook|1946639252013161"
+      },
+      "parentId": "43d4bc7b-a561-4563-8881-0f7e06d726ff"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "multipart/form-data",
+          "items": [
+            {
+              "type": "File",
+              "name": "file"
+            }
+          ]
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"id\": \"7777777\",\n  \"estado\": {\n    \"id\": \"SP\",\n    \"sigla\": \"SP\"\n  },\n  \"nome\": \"Ribeirão Preto\",\n  \"capital\": false,\n  \"latitude\": -11.9355403048,\n  \"longitude\": -61.9998238963,\n  \"noAccents\": \"Ribeirao Preto\",\n  \"nomeAlternativo\": \"\",\n  \"microRegiao\": \"Ribeirao Preto\",\n  \"mesoRegiao\": \"Ribeirao Preto\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": [
+            {
+              "enabled": true,
+              "name": "column",
+              "value": "uf"
+            },
+            {
+              "enabled": true,
+              "name": "valor",
+              "value": "SP"
+            }
+          ]
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:9000",
+        "path": "/senior/cidade/"
+      },
+      "id": "1457dfcb-350b-4f31-988a-b063761e5cd5",
+      "lastModified": "2019-10-01T05:58:20.808-03:00",
+      "name": "#9 - Find Column (estado)",
+      "headers": [],
+      "metaInfo": {
+        "ownerId": "facebook|1946639252013161"
+      },
+      "parentId": "43d4bc7b-a561-4563-8881-0f7e06d726ff"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "multipart/form-data",
+          "items": [
+            {
+              "type": "File",
+              "name": "file"
+            }
+          ]
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"id\": \"7777777\",\n  \"estado\": {\n    \"id\": \"SP\",\n    \"sigla\": \"SP\"\n  },\n  \"nome\": \"Ribeirão Preto\",\n  \"capital\": false,\n  \"latitude\": -11.9355403048,\n  \"longitude\": -61.9998238963,\n  \"noAccents\": \"Ribeirao Preto\",\n  \"nomeAlternativo\": \"\",\n  \"microRegiao\": \"Ribeirao Preto\",\n  \"mesoRegiao\": \"Ribeirao Preto\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": [
+            {
+              "enabled": true,
+              "name": "column",
+              "value": "ibge_id"
+            },
+            {
+              "enabled": true,
+              "name": "valor",
+              "value": "7777777"
+            }
+          ]
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:9000",
+        "path": "/senior/cidade/"
+      },
+      "id": "738ef0f0-0143-493d-ab03-e49dfbc612d5",
+      "lastModified": "2019-10-01T05:57:21.144-03:00",
+      "name": "#9 - Find Column (ibge_id)",
+      "headers": [],
+      "metaInfo": {
+        "ownerId": "facebook|1946639252013161"
+      },
+      "parentId": "43d4bc7b-a561-4563-8881-0f7e06d726ff"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "multipart/form-data",
+          "items": [
+            {
+              "type": "File",
+              "name": "file"
+            }
+          ]
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"id\": \"7777777\",\n  \"estado\": {\n    \"id\": \"SP\",\n    \"sigla\": \"SP\"\n  },\n  \"nome\": \"Ribeirão Preto\",\n  \"capital\": false,\n  \"latitude\": -11.9355403048,\n  \"longitude\": -61.9998238963,\n  \"noAccents\": \"Ribeirao Preto\",\n  \"nomeAlternativo\": \"\",\n  \"microRegiao\": \"Ribeirao Preto\",\n  \"mesoRegiao\": \"Ribeirao Preto\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": [
+            {
+              "enabled": true,
+              "name": "column",
+              "value": "lon"
+            },
+            {
+              "enabled": true,
+              "name": "valor",
+              "value": "-61.9998238963"
+            }
+          ]
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:9000",
+        "path": "/senior/cidade/"
+      },
+      "id": "c3d3788c-dcd3-4c5e-9b49-be7092dedfff",
+      "lastModified": "2019-10-01T06:37:04.623-03:00",
+      "name": "#9 - Find Column (longitude)",
+      "headers": [],
+      "metaInfo": {
+        "ownerId": "facebook|1946639252013161"
+      },
+      "parentId": "43d4bc7b-a561-4563-8881-0f7e06d726ff"
+    },
+    {
+      "uriEditor": true,
+      "type": "Request",
+      "method": {
+        "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+        "name": "GET"
+      },
+      "body": {
+        "formBody": {
+          "overrideContentType": true,
+          "encoding": "multipart/form-data",
+          "items": [
+            {
+              "type": "File",
+              "name": "file"
+            }
+          ]
+        },
+        "bodyType": "Text",
+        "autoSetLength": true,
+        "textBody": "{\n  \"id\": \"7777777\",\n  \"estado\": {\n    \"id\": \"SP\",\n    \"sigla\": \"SP\"\n  },\n  \"nome\": \"Ribeirão Preto\",\n  \"capital\": false,\n  \"latitude\": -11.9355403048,\n  \"longitude\": -61.9998238963,\n  \"noAccents\": \"Ribeirao Preto\",\n  \"nomeAlternativo\": \"\",\n  \"microRegiao\": \"Ribeirao Preto\",\n  \"mesoRegiao\": \"Ribeirao Preto\"\n}"
+      },
+      "headersType": "Form",
+      "uri": {
+        "query": {
+          "delimiter": "&",
+          "items": [
+            {
+              "enabled": true,
+              "name": "column",
+              "value": "name"
+            },
+            {
+              "enabled": true,
+              "name": "valor",
+              "value": "Ribeir"
+            }
+          ]
+        },
+        "scheme": {
+          "name": "http",
+          "version": "V11"
+        },
+        "host": "localhost:9000",
+        "path": "/senior/cidade/"
+      },
+      "id": "085079c6-2e07-4636-aad0-f4be29f28598",
+      "lastModified": "2019-10-02T06:41:32.456-03:00",
+      "name": "#9 - Find Column (name)",
+      "headers": [],
+      "metaInfo": {
+        "ownerId": "facebook|1946639252013161"
+      },
+      "parentId": "43d4bc7b-a561-4563-8881-0f7e06d726ff"
+    }
+  ]
+}

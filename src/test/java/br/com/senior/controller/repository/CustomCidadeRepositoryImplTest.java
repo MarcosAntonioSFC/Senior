@@ -23,8 +23,7 @@ public class CustomCidadeRepositoryImplTest {
       Assert.assertNull("Coluna não existe", repository.columnValid("xpto"));
       Assert.fail("Coluna não existe");
     } catch (ServiceException e) {
-      throw e;
+      //
     }
   }
-
 }

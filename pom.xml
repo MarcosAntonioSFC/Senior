@@ -12,7 +12,7 @@
 	<name>Cidades</name>
 	<groupId>br.com.senior</groupId>
 	<artifactId>cidade</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<description>Processo seletivo Senior</description>
 
 	<properties>
